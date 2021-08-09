@@ -49,18 +49,18 @@ export const useMovesStore = () => {
   const addMove = (index: number) =>
     dispatch({ type: "ADD_MOVE", payload: index });
 
-  const getPlayer = (index: number) =>
-    activeMoves.find((m) => m.index === index)?.player;
+  const getPlayer = (index: number): Player | undefined =>
+    activeMoves.find((m: Move) => m.index === index)?.player;
 
   const reset = state.moves.length
     ? () => dispatch({ type: "RESET_MOVES" })
     : undefined;
 
-  const getMoves = (player: Player) =>
-    activeMoves.filter((m) => m.player === player);
+  const getMoves = (player: Player): Move[] =>
+    activeMoves.filter((m: Move) => m.player === player);
 
-  const hasWon = (player: Player) =>
-    STRAKS.find((s) =>
+  const hasWon = (player: Player): boolean =>
+    !!STRAKS.find((s) =>
       s.every((index) =>
         getMoves(player)
           .map((m) => m.index)

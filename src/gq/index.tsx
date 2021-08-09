@@ -41,8 +41,8 @@ const fetchJobs = (): Promise<JobApi[]> =>
     setTimeout(
       () =>
         resolve(
-          Array.from(Array(chance.integer({ min: 3, max: 10 }))).map(() =>
-            generateJob()
+          Array.from(Array(chance.integer({ min: 3, max: 10 }))).map(
+            (): JobApi => generateJob()
           )
         ),
       chance.integer({ min: 200, max: 3000 })
@@ -80,7 +80,9 @@ const jobReducer = (state: State, action: Action): State => {
     case "set-jobs":
       return {
         loading: false,
-        jobs: action.payload.map((job) => ({ ...job, refreshing: false })),
+        jobs: action.payload.map(
+          (job: JobApi): Job => ({ ...job, refreshing: false })
+        ),
       };
     case "start-refresh-job":
       if (state.loading)
@@ -88,7 +90,7 @@ const jobReducer = (state: State, action: Action): State => {
       return {
         loading: false,
         jobs: state.jobs.map(
-          (job): Job =>
+          (job: Job): Job =>
             job.id === action.payload ? { ...job, refreshing: true } : job
         ),
       };
@@ -98,7 +100,7 @@ const jobReducer = (state: State, action: Action): State => {
       return {
         loading: false,
         jobs: state.jobs.map(
-          (job): Job =>
+          (job: Job): Job =>
             job.id === action.payload.id
               ? { ...action.payload, refreshing: false }
               : job
@@ -109,7 +111,7 @@ const jobReducer = (state: State, action: Action): State => {
       return {
         loading: false,
         jobs: [...state.jobs].sort(
-          (a, b) =>
+          (a: Job, b: Job) =>
             // -1 = re-order
             // 0/1 = same
             // a > b = 1
@@ -176,7 +178,7 @@ export const GreatQuestion = () => {
 
   useEffect(() => {
     fetchJobs()
-      .then((jobs) => dispatch({ type: "set-jobs", payload: jobs }))
+      .then((jobs: JobApi[]) => dispatch({ type: "set-jobs", payload: jobs }))
       .catch(console.error);
   }, []);
 
@@ -184,7 +186,9 @@ export const GreatQuestion = () => {
     dispatch({ type: "start-refresh-job", payload: jobId });
 
     fetchJob(jobId)
-      .then((job) => dispatch({ type: "finish-refresh-job", payload: job }))
+      .then((job: JobApi) =>
+        dispatch({ type: "finish-refresh-job", payload: job })
+      )
       .catch(console.error);
   };
 
