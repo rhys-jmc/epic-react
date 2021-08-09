@@ -7,8 +7,7 @@ export const Square = ({ index }: { index: number }) => {
 
   return (
     <button
-      className="square"
-      style={{ height: 48, width: 48, fontSize: 24 }}
+      className="w-12 h-12 text-lg"
       onClick={() => addMove(index)}
       disabled={!!player || !!winner}
     >

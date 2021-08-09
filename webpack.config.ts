@@ -29,7 +29,7 @@ const config: Configuration = {
         exclude: /node_modules/,
         loader: "source-map-loader",
       },
-      { test: /\.css$/, use: ["style-loader", "css-loader"] },
+      { test: /\.css$/, use: ["style-loader", "css-loader", "postcss-loader"] },
     ],
   },
   plugins: [htmlPlugin],

@@ -1,12 +1,6 @@
-import "bootstrap/dist/css/bootstrap.css";
 import React, { useEffect, useReducer } from "react";
-import { render } from "react-dom";
 import { Chance } from "chance";
 import { formatRelative } from "date-fns";
-
-// import { TicTacToe } from "./0-react-hooks/0-tic-tac-toe";
-
-// const App = () => <TicTacToe />;
 
 const chance = new Chance();
 
@@ -137,14 +131,14 @@ const JobsTable = ({
   handleSort: (payload: SortPayload) => () => void;
   handleRefresh: (jobId: Job["id"]) => () => void;
 }) => (
-  <table className="table">
+  <table className="min-w-full divide-y">
     <thead>
       <tr>
-        <th>{"id"}</th>
-        <th>{"status"}</th>
-        <th>{"queued at"}</th>
-        <th>
-          {"completed at"}{" "}
+        <th className="text-left">{"id"}</th>
+        <th className="text-left">{"status"}</th>
+        <th className="text-left">{"queued at"}</th>
+        <th className="text-left">
+          {"completed at"}
           <button
             onClick={handleSort({
               key: "completedAt",
@@ -154,10 +148,10 @@ const JobsTable = ({
             sort
           </button>
         </th>
-        <th>{"re-load"}</th>
+        <th className="text-left">{"re-load"}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody className="divide-y">
       {jobs.map((job) => (
         <tr key={job.id}>
           <td>{job.id}</td>
@@ -166,7 +160,7 @@ const JobsTable = ({
           <td>{formatRelative(new Date(job.completedAt), new Date())}</td>
           <td>
             {job.refreshing ? (
-              "Refreshing..."
+              "..."
             ) : (
               <button onClick={handleRefresh(job.id)}>{"refresh"}</button>
             )}

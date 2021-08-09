@@ -6,13 +6,7 @@ export const Game = () => {
   const { reset, history, turn, winner } = useMovesStore();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
+    <div className="flex flex-col items-center">
       <p>
         {winner
           ? `Player ${winner} has won!`
