@@ -57,12 +57,14 @@ export const useMovesStore = (): MovesStore => {
 
   const activeMoves = getActiveMoves(state);
 
-  const history = Array.from(Array(state.moves.length + 1)).map((_, i) => ({
-    isActive: state.activeIndex === i - 1,
-    setActive: () => {
-      dispatch({ type: "SET_ACTIVE_MOVE", payload: i - 1 });
-    },
-  }));
+  const history = Array.from({ length: state.moves.length + 1 }).map(
+    (_, index) => ({
+      isActive: state.activeIndex === index - 1,
+      setActive: () => {
+        dispatch({ type: "SET_ACTIVE_MOVE", payload: index - 1 });
+      },
+    })
+  );
 
   const addMove = (index: number) => {
     dispatch({ type: "ADD_MOVE", payload: index });
@@ -71,17 +73,18 @@ export const useMovesStore = (): MovesStore => {
   const getPlayer = (index: number): Player | undefined =>
     activeMoves.find((m: Move) => m.index === index)?.player;
 
-  const reset = state.moves.length
-    ? () => {
-        dispatch({ type: "RESET_MOVES" });
-      }
-    : undefined;
+  const reset =
+    state.moves.length > 0
+      ? () => {
+          dispatch({ type: "RESET_MOVES" });
+        }
+      : undefined;
 
   const getMoves = (player: Player): Move[] =>
     activeMoves.filter((m: Move) => m.player === player);
 
   const hasWon = (player: Player): boolean =>
-    !!STRAKS.find((s) =>
+    STRAKS.some((s) =>
       s.every((index) =>
         getMoves(player)
           .map((m) => m.index)
@@ -89,7 +92,7 @@ export const useMovesStore = (): MovesStore => {
       )
     );
 
-  const winner = PLAYERS.filter(hasWon)[0];
+  const winner = PLAYERS.find(hasWon);
   const turn = activeMoves.length === 9 ? undefined : getActivePlayer(state);
 
   return { addMove, getPlayer, reset, history, turn, winner };

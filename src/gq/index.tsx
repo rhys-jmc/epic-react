@@ -39,7 +39,7 @@ const fetchJobs = async (): Promise<JobApi[]> =>
   new Promise((resolve) =>
     setTimeout(() => {
       resolve(
-        Array.from(Array(chance.integer({ min: 3, max: 10 }))).map(
+        Array.from({ length: chance.integer({ min: 3, max: 10 }) }).map(
           (): JobApi => generateJob()
         )
       );
