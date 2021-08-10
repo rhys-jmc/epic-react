@@ -26,6 +26,12 @@ module.exports = defineConfig({
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "prettier",
       ],
+      rules: {
+        "@typescript-eslint/array-type": "error",
+        "@typescript-eslint/consistent-type-assertions": "error",
+        "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+        "@typescript-eslint/consistent-type-imports": "error",
+      },
     },
   ],
 });

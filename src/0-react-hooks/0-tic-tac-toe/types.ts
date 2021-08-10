@@ -1,4 +1,4 @@
-import { PLAYERS } from "./constants";
+import type { PLAYERS } from "./constants";
 
 export type Player = typeof PLAYERS[number];
 export type Move = { index: number; player: Player };

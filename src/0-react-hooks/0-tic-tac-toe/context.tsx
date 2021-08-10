@@ -1,7 +1,7 @@
 import React from "react";
 import { STRAKS, PLAYERS } from "./constants";
 import { getActiveMoves, getActivePlayer } from "./helpers";
-import { State, Action, Move, Player } from "./types";
+import type { State, Action, Move, Player } from "./types";
 
 const initialState: State = { activeIndex: -1, moves: [] };
 
