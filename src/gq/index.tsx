@@ -28,14 +28,14 @@ const generateJob = (job: Partial<JobApi> = {}): JobApi => ({
   ...job,
 });
 
-const fetchJob = (jobId: Job["id"]): Promise<JobApi> =>
+const fetchJob = async (jobId: Job["id"]): Promise<JobApi> =>
   new Promise((resolve) =>
     setTimeout(() => {
       resolve(generateJob({ id: jobId }));
     }, chance.integer({ min: 200, max: 3000 }))
   );
 
-const fetchJobs = (): Promise<JobApi[]> =>
+const fetchJobs = async (): Promise<JobApi[]> =>
   new Promise((resolve) =>
     setTimeout(() => {
       resolve(
