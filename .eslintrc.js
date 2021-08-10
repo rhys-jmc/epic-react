@@ -7,11 +7,13 @@ module.exports = defineConfig({
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ["./tsconfig.eslint.json"],
+    warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: ["@typescript-eslint", "only-error"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:eslint-comments/recommended",
     "prettier",
   ],
   overrides: [
