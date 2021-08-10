@@ -4,6 +4,10 @@ const { defineConfig } = require("eslint-define-config");
 module.exports = defineConfig({
   root: true,
   parser: "@typescript-eslint/parser",
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ["./tsconfig.eslint.json"],
+  },
   plugins: ["@typescript-eslint", "only-error"],
   extends: [
     "eslint:recommended",
@@ -15,7 +19,11 @@ module.exports = defineConfig({
     { files: ["*.tsx"], env: { browser: true } },
     {
       files: ["*.ts", "*.tsx"],
-      extends: ["plugin:@typescript-eslint/recommended", "prettier"],
+      extends: [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "prettier",
+      ],
     },
   ],
 });
