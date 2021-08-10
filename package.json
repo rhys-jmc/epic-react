@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "eslint . --cache",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
@@ -20,8 +22,13 @@
     "@types/node": "^16.4.13",
     "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
     "autoprefixer": "^10.3.1",
     "css-loader": "^6.2.0",
+    "eslint": "^7.32.0",
+    "eslint-define-config": "^1.0.9",
+    "eslint-plugin-only-error": "^1.0.2",
     "html-webpack-plugin": "^5.3.2",
     "postcss": "^8.3.6",
     "postcss-loader": "^6.1.1",

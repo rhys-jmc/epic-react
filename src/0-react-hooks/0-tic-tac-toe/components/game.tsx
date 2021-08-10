@@ -2,7 +2,7 @@ import React from "react";
 import { useMovesStore } from "../context";
 import { Board } from "./board";
 
-export const Game = () => {
+export const Game = (): JSX.Element => {
   const { reset, history, turn, winner } = useMovesStore();
 
   return (

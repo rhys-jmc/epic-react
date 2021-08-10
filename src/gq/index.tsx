@@ -173,7 +173,7 @@ const JobsTable = ({
   </table>
 );
 
-export const GreatQuestion = () => {
+export const GreatQuestion = (): JSX.Element => {
   const [state, dispatch] = useReducer(jobReducer, initialState);
 
   useEffect(() => {

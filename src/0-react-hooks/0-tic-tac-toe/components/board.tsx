@@ -1,7 +1,7 @@
 import React from "react";
 import { Square } from "./square";
 
-export const Board = () => {
+export const Board = (): JSX.Element => {
   return (
     <div className="grid grid-cols-3">
       {Array.from(Array(9)).map((_, index) => (

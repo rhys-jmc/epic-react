@@ -5,18 +5,20 @@ import { State, Action, Move, Player } from "./types";
 
 const initialState: State = { activeIndex: -1, moves: [] };
 
-const MovesStore = React.createContext<
+const MovesState = React.createContext<
   [State, React.Dispatch<Action>] | undefined
 >(undefined);
 
 const movesReducer = (state = initialState, action: Action): State => {
+  const activeMoves = getActiveMoves(state);
+  const player = getActivePlayer(state);
+
   switch (action.type) {
-    case "ADD_MOVE":
-      const activeMoves = getActiveMoves(state);
-      const player = getActivePlayer(state);
+    case "ADD_MOVE": {
       const moves: Move[] = [...activeMoves, { player, index: action.payload }];
 
       return { activeIndex: moves.length - 1, moves };
+    }
     case "RESET_MOVES":
       return initialState;
     case "SET_ACTIVE_MOVE":
@@ -26,14 +28,23 @@ const movesReducer = (state = initialState, action: Action): State => {
 
 export const MovesProvider: React.FC = ({ children }) => {
   return (
-    <MovesStore.Provider value={React.useReducer(movesReducer, initialState)}>
+    <MovesState.Provider value={React.useReducer(movesReducer, initialState)}>
       {children}
-    </MovesStore.Provider>
+    </MovesState.Provider>
   );
 };
 
-export const useMovesStore = () => {
-  const context = React.useContext(MovesStore);
+type MovesStore = {
+  addMove: (index: number) => void;
+  getPlayer: (index: number) => Player | undefined;
+  reset: undefined | (() => void);
+  history: { isActive: boolean; setActive: () => void }[];
+  turn: Player | undefined;
+  winner: Player | undefined;
+};
+
+export const useMovesStore = (): MovesStore => {
+  const context = React.useContext(MovesState);
 
   if (!context) throw new Error("useMovesStore not in MovesProvider");
 
