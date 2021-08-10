@@ -17,6 +17,7 @@ module.exports = defineConfig({
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "prettier",
   ],
   settings: { react: { version: "detect" } },
