@@ -20,14 +20,21 @@ export const Game = (): JSX.Element => {
           <button
             key={index}
             disabled={m.isActive}
-            onClick={() => { m.setActive(); }}
+            onClick={() => {
+              m.setActive();
+            }}
           >
             {index}
           </button>
         ))}
       </div>
       <div>
-        <button disabled={!reset} onClick={() => {  reset?.(); }}>
+        <button
+          disabled={!reset}
+          onClick={() => {
+            reset?.();
+          }}
+        >
           {"Restart!"}
         </button>
       </div>

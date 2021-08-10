@@ -54,17 +54,22 @@ export const useMovesStore = (): MovesStore => {
 
   const history = Array.from(Array(state.moves.length + 1)).map((_, i) => ({
     isActive: state.activeIndex === i - 1,
-    setActive: () => { dispatch({ type: "SET_ACTIVE_MOVE", payload: i - 1 }); },
+    setActive: () => {
+      dispatch({ type: "SET_ACTIVE_MOVE", payload: i - 1 });
+    },
   }));
 
-  const addMove = (index: number) =>
-    { dispatch({ type: "ADD_MOVE", payload: index }); };
+  const addMove = (index: number) => {
+    dispatch({ type: "ADD_MOVE", payload: index });
+  };
 
   const getPlayer = (index: number): Player | undefined =>
     activeMoves.find((m: Move) => m.index === index)?.player;
 
   const reset = state.moves.length
-    ? () => { dispatch({ type: "RESET_MOVES" }); }
+    ? () => {
+        dispatch({ type: "RESET_MOVES" });
+      }
     : undefined;
 
   const getMoves = (player: Player): Move[] =>
