@@ -72,6 +72,7 @@ type Action =
 
 const initialState: State = { loading: true };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const jobReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "set-jobs":
@@ -109,10 +110,6 @@ const jobReducer = (state: State, action: Action): State => {
         loading: false,
         jobs: [...state.jobs].sort(
           (a: Job, b: Job) =>
-            // -1 = re-order
-            // 0/1 = same
-            // a > b = 1
-            // b > a = -1
             (new Date(a[action.payload.key]).getTime() -
               new Date(b[action.payload.key]).getTime()) *
             (action.payload.direction === "ascending" ? 1 : -1)

@@ -15,6 +15,7 @@ module.exports = defineConfig({
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:sonarjs/recommended",
     "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
