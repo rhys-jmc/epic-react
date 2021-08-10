@@ -8,7 +8,7 @@ export const Square = ({ index }: { index: number }): JSX.Element => {
   return (
     <button
       className="w-12 h-12 text-lg"
-      onClick={() => addMove(index)}
+      onClick={() => { addMove(index); }}
       disabled={!!player || !!winner}
     >
       {player ?? "-"}

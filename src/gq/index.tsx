@@ -31,7 +31,7 @@ const generateJob = (job: Partial<JobApi> = {}): JobApi => ({
 const fetchJob = (jobId: Job["id"]): Promise<JobApi> =>
   new Promise((resolve) =>
     setTimeout(
-      () => resolve(generateJob({ id: jobId })),
+      () => { resolve(generateJob({ id: jobId })); },
       chance.integer({ min: 200, max: 3000 })
     )
   );
@@ -40,11 +40,11 @@ const fetchJobs = (): Promise<JobApi[]> =>
   new Promise((resolve) =>
     setTimeout(
       () =>
-        resolve(
+        { resolve(
           Array.from(Array(chance.integer({ min: 3, max: 10 }))).map(
             (): JobApi => generateJob()
           )
-        ),
+        ); },
       chance.integer({ min: 200, max: 3000 })
     )
   );
@@ -178,7 +178,7 @@ export const GreatQuestion = (): JSX.Element => {
 
   useEffect(() => {
     fetchJobs()
-      .then((jobs: JobApi[]) => dispatch({ type: "set-jobs", payload: jobs }))
+      .then((jobs: JobApi[]) => { dispatch({ type: "set-jobs", payload: jobs }); })
       .catch(console.error);
   }, []);
 
@@ -187,7 +187,7 @@ export const GreatQuestion = (): JSX.Element => {
 
     fetchJob(jobId)
       .then((job: JobApi) =>
-        dispatch({ type: "finish-refresh-job", payload: job })
+        { dispatch({ type: "finish-refresh-job", payload: job }); }
       )
       .catch(console.error);
   };
