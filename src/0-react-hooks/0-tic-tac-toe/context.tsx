@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import React from "react";
 import { STRAKS, PLAYERS } from "./constants";
 import { getActiveMoves, getActivePlayer } from "./helpers";
@@ -26,7 +27,11 @@ const movesReducer = (state = initialState, action: Action): State => {
   }
 };
 
-export const MovesProvider: React.FC = ({ children }) => {
+export const MovesProvider = ({
+  children,
+}: {
+  children?: ReactNode;
+}): JSX.Element => {
   return (
     <MovesState.Provider value={React.useReducer(movesReducer, initialState)}>
       {children}

@@ -8,14 +8,17 @@ module.exports = defineConfig({
     tsconfigRootDir: __dirname,
     project: ["./tsconfig.eslint.json"],
     warnOnUnsupportedTypeScriptVersion: false,
+    ecmaFeatures: { jsx: true },
   },
   plugins: ["@typescript-eslint", "only-error"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:eslint-comments/recommended",
+    "plugin:react/recommended",
     "prettier",
   ],
+  settings: { react: { version: "detect" } },
   overrides: [
     { files: ["*.js"], env: { node: true } },
     { files: ["*.tsx"], env: { browser: true } },
