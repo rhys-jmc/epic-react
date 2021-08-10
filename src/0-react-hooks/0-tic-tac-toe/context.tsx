@@ -37,7 +37,7 @@ export const MovesProvider: React.FC = ({ children }) => {
 type MovesStore = {
   addMove: (index: number) => void;
   getPlayer: (index: number) => Player | undefined;
-  reset: undefined | (() => void);
+  reset: (() => void) | undefined;
   history: { isActive: boolean; setActive: () => void }[];
   turn: Player | undefined;
   winner: Player | undefined;

@@ -57,18 +57,18 @@ type JobApi = {
 
 type Job = JobApi & { refreshing: boolean /* refresh: () => void */ };
 
-type State = { loading: true } | { loading: false; jobs: Job[] };
+type State = { loading: false; jobs: Job[] } | { loading: true };
 
 type SortPayload = {
   direction: "ascending" | "descending";
-  key: keyof Pick<JobApi, "queuedAt" | "completedAt">;
+  key: keyof Pick<JobApi, "completedAt" | "queuedAt">;
 };
 
 type Action =
-  | { type: "set-jobs"; payload: JobApi[] }
-  | { type: "start-refresh-job"; payload: Job["id"] }
   | { type: "finish-refresh-job"; payload: JobApi }
-  | { type: "sort"; payload: SortPayload };
+  | { type: "set-jobs"; payload: JobApi[] }
+  | { type: "sort"; payload: SortPayload }
+  | { type: "start-refresh-job"; payload: Job["id"] };
 
 const initialState: State = { loading: true };
 
