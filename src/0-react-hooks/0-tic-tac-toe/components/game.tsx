@@ -27,7 +27,7 @@ export const Game = (): JSX.Element => {
         ))}
       </div>
       <div>
-        <button disabled={!reset} onClick={() => { reset && reset(); }}>
+        <button disabled={!reset} onClick={() => {  reset?.(); }}>
           {"Restart!"}
         </button>
       </div>
