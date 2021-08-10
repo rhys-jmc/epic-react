@@ -8,13 +8,14 @@ module.exports = defineConfig({
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
+    "prettier",
   ],
   overrides: [
     { files: ["*.js"], env: { node: true } },
     { files: ["*.tsx"], env: { browser: true } },
     {
       files: ["*.ts", "*.tsx"],
-      extends: ["plugin:@typescript-eslint/recommended"],
+      extends: ["plugin:@typescript-eslint/recommended", "prettier"],
     },
   ],
 });
