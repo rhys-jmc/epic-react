@@ -1,6 +1,6 @@
 import type { Move, Player, State } from "./types";
 
-export const getActiveMoves = (state: State): Move[] =>
+export const getActiveMoves = (state: State): readonly Move[] =>
   state.moves.slice(0, state.activeIndex + 1);
 
 export const getActivePlayer = (state: State): Player =>

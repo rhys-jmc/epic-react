@@ -10,11 +10,15 @@ module.exports = defineConfig({
     warnOnUnsupportedTypeScriptVersion: false,
     ecmaFeatures: { jsx: true },
   },
-  plugins: ["@typescript-eslint", "only-error"],
+  plugins: ["@typescript-eslint", "functional", "only-error"],
   extends: [
     "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:functional/external-recommended",
+    "plugin:functional/lite",
+    "plugin:functional/stylistic",
     "plugin:sonarjs/recommended",
     "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
@@ -49,7 +53,7 @@ module.exports = defineConfig({
     "@typescript-eslint/prefer-nullish-coalescing": "error",
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/prefer-readonly": "error",
-    // "@typescript-eslint/prefer-readonly-parameter-types": "error",
+    "@typescript-eslint/prefer-readonly-parameter-types": "error",
     "@typescript-eslint/prefer-reduce-type-parameter": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
     "@typescript-eslint/promise-function-async": "error",
@@ -59,6 +63,13 @@ module.exports = defineConfig({
     "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/typedef": "error",
     "@typescript-eslint/unified-signatures": "error",
+
+    "functional/immutable-data": [
+      "error",
+      { ignorePattern: ["^module.exports"] },
+    ],
+    "functional/no-return-void": "off",
+    "functional/no-throw-statement": "off",
   },
   overrides: [
     {

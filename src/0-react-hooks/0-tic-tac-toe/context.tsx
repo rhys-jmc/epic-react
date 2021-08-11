@@ -7,7 +7,7 @@ import type { State, Action, Move, Player } from "./types";
 const initialState: State = { activeIndex: -1, moves: [] };
 
 const MovesState = React.createContext<
-  [State, React.Dispatch<Action>] | undefined
+  readonly [State, React.Dispatch<Action>] | undefined
 >(undefined);
 
 const movesReducer = (state = initialState, action: Action): State => {
@@ -16,7 +16,10 @@ const movesReducer = (state = initialState, action: Action): State => {
 
   switch (action.type) {
     case "ADD_MOVE": {
-      const moves: Move[] = [...activeMoves, { player, index: action.payload }];
+      const moves: readonly Move[] = [
+        ...activeMoves,
+        { player, index: action.payload },
+      ];
 
       return { activeIndex: moves.length - 1, moves };
     }
@@ -30,7 +33,7 @@ const movesReducer = (state = initialState, action: Action): State => {
 export const MovesProvider = ({
   children,
 }: {
-  children?: ReactNode;
+  readonly children?: ReactNode;
 }): JSX.Element => {
   return (
     <MovesState.Provider value={React.useReducer(movesReducer, initialState)}>
@@ -40,12 +43,15 @@ export const MovesProvider = ({
 };
 
 type MovesStore = {
-  addMove: (index: number) => void;
-  getPlayer: (index: number) => Player | undefined;
-  reset: (() => void) | undefined;
-  history: { isActive: boolean; setActive: () => void }[];
-  turn: Player | undefined;
-  winner: Player | undefined;
+  readonly addMove: (index: number) => unknown;
+  readonly getPlayer: (index: number) => Player | undefined;
+  readonly reset: (() => unknown) | undefined;
+  readonly history: readonly {
+    readonly isActive: boolean;
+    readonly setActive: () => unknown;
+  }[];
+  readonly turn: Player | undefined;
+  readonly winner: Player | undefined;
 };
 
 export const useMovesStore = (): MovesStore => {
@@ -66,7 +72,7 @@ export const useMovesStore = (): MovesStore => {
     })
   );
 
-  const addMove = (index: number) => {
+  const addMove = (index: number): void => {
     dispatch({ type: "ADD_MOVE", payload: index });
   };
 
@@ -80,7 +86,7 @@ export const useMovesStore = (): MovesStore => {
         }
       : undefined;
 
-  const getMoves = (player: Player): Move[] =>
+  const getMoves = (player: Player): readonly Move[] =>
     activeMoves.filter((m: Move) => m.player === player);
 
   const hasWon = (player: Player): boolean =>

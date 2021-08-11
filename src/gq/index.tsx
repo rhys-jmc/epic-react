@@ -35,12 +35,12 @@ const fetchJob = async (jobId: Job["id"]): Promise<JobApi> =>
     }, chance.integer({ min: 200, max: 3000 }))
   );
 
-const fetchJobs = async (): Promise<JobApi[]> =>
+const fetchJobs = async (): Promise<readonly JobApi[]> =>
   new Promise((resolve) =>
     setTimeout(() => {
       resolve(
-        Array.from({ length: chance.integer({ min: 3, max: 10 }) }).map(
-          (): JobApi => generateJob()
+        Array.from<never>({ length: chance.integer({ min: 3, max: 10 }) }).map(
+          generateJob
         )
       );
     }, chance.integer({ min: 200, max: 3000 }))
@@ -49,26 +49,28 @@ const fetchJobs = async (): Promise<JobApi[]> =>
 type DateString = `${string}`;
 
 type JobApi = {
-  id: string;
-  status: typeof statuses[number];
-  queuedAt: DateString;
-  completedAt: DateString;
+  readonly id: string;
+  readonly status: typeof statuses[number];
+  readonly queuedAt: DateString;
+  readonly completedAt: DateString;
 };
 
-type Job = JobApi & { refreshing: boolean /* refresh: () => void */ };
+type Job = JobApi & { readonly refreshing: boolean /* refresh: () => void */ };
 
-type State = { loading: false; jobs: Job[] } | { loading: true };
+type State =
+  | { readonly loading: false; readonly jobs: readonly Job[] }
+  | { readonly loading: true };
 
 type SortPayload = {
-  direction: "ascending" | "descending";
-  key: keyof Pick<JobApi, "completedAt" | "queuedAt">;
+  readonly direction: "ascending" | "descending";
+  readonly key: keyof Pick<JobApi, "completedAt" | "queuedAt">;
 };
 
 type Action =
-  | { type: "finish-refresh-job"; payload: JobApi }
-  | { type: "set-jobs"; payload: JobApi[] }
-  | { type: "sort"; payload: SortPayload }
-  | { type: "start-refresh-job"; payload: Job["id"] };
+  | { readonly type: "finish-refresh-job"; readonly payload: JobApi }
+  | { readonly type: "set-jobs"; readonly payload: readonly JobApi[] }
+  | { readonly type: "sort"; readonly payload: SortPayload }
+  | { readonly type: "start-refresh-job"; readonly payload: Job["id"] };
 
 const initialState: State = { loading: true };
 
@@ -123,10 +125,10 @@ const JobsTable = ({
   handleSort,
   handleRefresh,
 }: {
-  jobs: Job[];
-  handleSort: (payload: SortPayload) => () => void;
-  handleRefresh: (jobId: Job["id"]) => () => void;
-}) => (
+  readonly jobs: readonly Job[];
+  readonly handleSort: (payload: SortPayload) => () => unknown;
+  readonly handleRefresh: (jobId: Job["id"]) => () => unknown;
+}): JSX.Element => (
   <table className="min-w-full divide-y">
     <thead>
       <tr>
@@ -172,7 +174,7 @@ export const GreatQuestion = (): JSX.Element => {
 
   useEffect(() => {
     fetchJobs()
-      .then((jobs: JobApi[]) => {
+      .then((jobs: readonly JobApi[]) => {
         dispatch({ type: "set-jobs", payload: jobs });
       })
       .catch(console.error);

@@ -1,7 +1,7 @@
 import React from "react";
 import { useMovesStore } from "../context";
 
-export const Square = ({ index }: { index: number }): JSX.Element => {
+export const Square = ({ index }: { readonly index: number }): JSX.Element => {
   const { addMove, getPlayer, winner } = useMovesStore();
   const player = getPlayer(index);
 
