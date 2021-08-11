@@ -196,10 +196,11 @@ export const GreatQuestion = (): JSX.Element => {
 
   return (
     <div>
-      {state.loading ? <span>{"Loading..."}</span> : null}
-      {"jobs" in state ? (
+      {state.loading ? (
+        <span>{"Loading..."}</span>
+      ) : (
         <JobsTable {...{ jobs: state.jobs, handleRefresh, handleSort }} />
-      ) : null}
+      )}
     </div>
   );
 };
