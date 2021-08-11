@@ -69,7 +69,7 @@ type SortPayload = {
 type Action =
   | { readonly type: "finish-refresh-job"; readonly payload: JobApi }
   | { readonly type: "set-jobs"; readonly payload: readonly JobApi[] }
-  | { readonly type: "sort"; readonly payload: SortPayload }
+  | { readonly type: "sort-jobs"; readonly payload: SortPayload }
   | { readonly type: "start-refresh-job"; readonly payload: Job["id"] };
 
 const initialState: State = { loading: true };
@@ -77,23 +77,6 @@ const initialState: State = { loading: true };
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const jobReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "set-jobs":
-      return {
-        loading: false,
-        jobs: action.payload.map(
-          (job: JobApi): Job => ({ ...job, refreshing: false })
-        ),
-      };
-    case "start-refresh-job":
-      if (state.loading)
-        throw new Error("cannot refresh job while loading jobs");
-      return {
-        loading: false,
-        jobs: state.jobs.map(
-          (job: Job): Job =>
-            job.id === action.payload ? { ...job, refreshing: true } : job
-        ),
-      };
     case "finish-refresh-job":
       if (state.loading)
         throw new Error("cannot finish refresh job while loading jobs");
@@ -106,7 +89,14 @@ const jobReducer = (state: State, action: Action): State => {
               : job
         ),
       };
-    case "sort":
+    case "set-jobs":
+      return {
+        loading: false,
+        jobs: action.payload.map(
+          (job: JobApi): Job => ({ ...job, refreshing: false })
+        ),
+      };
+    case "sort-jobs":
       if (state.loading) throw new Error("cannot sort jobs while loading jobs");
       return {
         loading: false,
@@ -115,6 +105,16 @@ const jobReducer = (state: State, action: Action): State => {
             (new Date(a[action.payload.key]).getTime() -
               new Date(b[action.payload.key]).getTime()) *
             (action.payload.direction === "ascending" ? 1 : -1)
+        ),
+      };
+    case "start-refresh-job":
+      if (state.loading)
+        throw new Error("cannot refresh job while loading jobs");
+      return {
+        loading: false,
+        jobs: state.jobs.map(
+          (job: Job): Job =>
+            job.id === action.payload ? { ...job, refreshing: true } : job
         ),
       };
   }
@@ -191,7 +191,7 @@ export const GreatQuestion = (): JSX.Element => {
   };
 
   const handleSort = (payload: SortPayload) => () => {
-    dispatch({ type: "sort", payload });
+    dispatch({ type: "sort-jobs", payload });
   };
 
   return (
